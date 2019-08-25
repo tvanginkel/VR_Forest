@@ -7,6 +7,7 @@
 #include "VR_Character.generated.h"
 
 class UCameraComponent;
+class AHandController;
 
 UCLASS()
 class VR_FOREST_API AVR_Character : public ACharacter
@@ -32,6 +33,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	UCameraComponent * Camera;
+
+	AHandController* LeftController;
+	AHandController* RightController;
 
 	void MoveForward(float throttle);
 	void MoveBackward(float throttle);

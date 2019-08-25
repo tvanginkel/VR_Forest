@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "VR_Character.h"
+
 #include "Classes/Camera/CameraComponent.h"
+#include"HandController.h"
 
 
 // Sets default values
@@ -12,6 +14,7 @@ AVR_Character::AVR_Character()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(GetRootComponent());
+
 }
 
 // Called when the game starts or when spawned
@@ -19,8 +22,18 @@ void AVR_Character::BeginPlay()
 {
 	Super::BeginPlay();
 
+	LeftController = GetWorld()->SpawnActor<AHandController>();
+	if (LeftController != nullptr)
+	{
+		LeftController->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+	}
 
-	
+	RightController = GetWorld()->SpawnActor<AHandController>();
+	if (RightController != nullptr)
+	{
+		RightController->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+	}
+
 }
 
 // Called every frame
