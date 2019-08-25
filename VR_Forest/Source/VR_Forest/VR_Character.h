@@ -34,6 +34,9 @@ private:
 	UPROPERTY(EditAnywhere)
 	UCameraComponent * Camera;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AHandController>HandControllerClass;
+
 	AHandController* LeftController;
 	AHandController* RightController;
 

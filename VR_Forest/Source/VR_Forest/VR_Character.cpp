@@ -22,16 +22,18 @@ void AVR_Character::BeginPlay()
 {
 	Super::BeginPlay();
 
-	LeftController = GetWorld()->SpawnActor<AHandController>();
+	LeftController = GetWorld()->SpawnActor<AHandController>(HandControllerClass);
 	if (LeftController != nullptr)
 	{
 		LeftController->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+		LeftController->SetHand(EControllerHand::Left);
 	}
 
-	RightController = GetWorld()->SpawnActor<AHandController>();
+	RightController = GetWorld()->SpawnActor<AHandController>(HandControllerClass);
 	if (RightController != nullptr)
 	{
 		RightController->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+		RightController->SetHand(EControllerHand::Right);
 	}
 
 }

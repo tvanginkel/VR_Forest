@@ -29,3 +29,7 @@ void AHandController::Tick(float DeltaTime)
 
 }
 
+void AHandController::SetHand(EControllerHand hand)
+{
+	Controller->Hand = hand;
+}
