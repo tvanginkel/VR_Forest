@@ -30,6 +30,7 @@ public:
 
 private:
 
+	UPROPERTY(EditAnywhere)
 	UCameraComponent * Camera;
 
 	void MoveForward(float throttle);
