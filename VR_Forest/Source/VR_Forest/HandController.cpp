@@ -2,7 +2,8 @@
 
 #include "HandController.h"
 #include "MotionControllerComponent.h"
-
+#include "Engine/World.h"
+#include "DrawDebugHelpers.h"
 
 // Sets default values
 AHandController::AHandController()
@@ -27,6 +28,21 @@ void AHandController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	FVector Start = Controller->GetComponentLocation();
+	FVector End = ((Controller->GetComponentRotation().Vector() * 200.f) + Start);
+	//FCollisionQueryParams CollisionQueryParams = FCollisionQueryParams::AddIgnoredActor();
+	
+	DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 1);
+
+
+	if (GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("I grabbed: %s"), *OutHit.GetActor()->GetName())
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No Hit"))
+	}
 }
 
 void AHandController::SetHand(EControllerHand hand)

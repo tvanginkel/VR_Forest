@@ -28,6 +28,8 @@ public:
 
 	void SetHand(EControllerHand hand);
 
+	FHitResult OutHit;
+
 private:
 
 	UMotionControllerComponent* Controller;
