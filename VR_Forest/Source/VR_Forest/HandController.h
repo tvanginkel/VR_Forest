@@ -8,6 +8,7 @@
 #include "HandController.generated.h"
 
 class UMotionControllerComponent;
+class UPhysicsHandleComponent;
 
 UCLASS()
 class VR_FOREST_API AHandController : public AActor
@@ -26,13 +27,24 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void SetHand(EControllerHand hand);
+	//Ray-cast and grab
+	void Grab();
 
-	FHitResult OutHit;
+	//Called when grab is released
+	void Release();
+
+	void SetHand(EControllerHand hand);
 
 private:
 
-	UMotionControllerComponent* Controller;
+	UMotionControllerComponent* Controller = nullptr;
 	
+	UPhysicsHandleComponent* PhysicsHandle = nullptr;
+
+	UInputComponent* InputComponent = nullptr;
+
+	float Reach = 110.0f;
+
+	bool GetFirstObjectInReach();
 	
 };

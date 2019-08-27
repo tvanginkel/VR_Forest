@@ -26,6 +26,18 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	//Calls controller grab R
+	void ControllerGrabR(); 
+
+	//Calls controller release R
+	void ControllerReleaseR();
+
+	//Calls controller grab L
+	void ControllerGrabL();
+
+	//Calls controller release L
+	void ControllerReleaseL();
+
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -41,8 +53,6 @@ private:
 	AHandController* RightController;
 
 	void MoveForward(float throttle);
-	void MoveBackward(float throttle);
 	void MoveRight(float throttle);
-	void MoveLeft(float throttle);
 	
 };

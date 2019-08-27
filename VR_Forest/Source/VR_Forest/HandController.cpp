@@ -4,6 +4,7 @@
 #include "MotionControllerComponent.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
 
 // Sets default values
 AHandController::AHandController()
@@ -21,6 +22,16 @@ void AHandController::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	PhysicsHandle = FindComponentByClass<UPhysicsHandleComponent>();
+	
+	if (PhysicsHandle == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Physics Handle missing"))
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Physics Handle found"))
+	}
 }
 
 // Called every frame
@@ -28,24 +39,72 @@ void AHandController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FVector Start = Controller->GetComponentLocation();
+	if (PhysicsHandle->GrabbedComponent)
+	{
+		FVector Start = Controller->GetComponentLocation();
+		FVector End = ((Controller->GetComponentRotation().Vector() * Reach) + Start);
+		PhysicsHandle->SetTargetLocation(End);
+	}
+
+}
+
+bool AHandController::GetFirstObjectInReach()
+{
+	/*FVector Start = Controller->GetComponentLocation();
 	FVector End = ((Controller->GetComponentRotation().Vector() * 200.f) + Start);
-	//FCollisionQueryParams CollisionQueryParams = FCollisionQueryParams::AddIgnoredActor();
-	
-	DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 1);
 
+	FHitResult OutHit;
 
-	if (GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility))
+	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
+
+	if (GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, TraceParameters))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("I grabbed: %s"), *OutHit.GetActor()->GetName())
+		UE_LOG(LogTemp, Warning, TEXT("Object in reach: %s"), *OutHit.GetActor()->GetName())
+		DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 1);
 	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("No Hit"))
-	}
+
+	return OutHit;*/
+	return true;
 }
 
 void AHandController::SetHand(EControllerHand hand)
 {
 	Controller->Hand = hand;
+}
+
+void AHandController::Grab()
+{
+	FVector Start = Controller->GetComponentLocation();
+	FVector End = ((Controller->GetComponentRotation().Vector() * Reach) + Start);
+
+	FHitResult OutHit;
+
+	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
+
+	if (GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, TraceParameters))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Object in reach: %s"), *OutHit.GetActor()->GetName())
+		DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 1);
+
+		UPrimitiveComponent* ComponentToGrab = OutHit.GetComponent();
+		AActor* ActorHit = OutHit.GetActor();
+
+		if (ComponentToGrab->GetOwner())
+		{
+			if (ActorHit)
+			{
+				///If we hit something then attach a physics handle
+				PhysicsHandle->GrabComponent(
+					ComponentToGrab,
+					NAME_None,
+					ComponentToGrab->GetOwner()->GetActorLocation(),
+					true);
+			}
+		}
+	}
+}
+
+void AHandController::Release()
+{
+	PhysicsHandle->ReleaseComponent();
 }

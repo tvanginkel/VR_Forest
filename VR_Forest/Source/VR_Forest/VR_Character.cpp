@@ -4,6 +4,7 @@
 
 #include "Classes/Camera/CameraComponent.h"
 #include"HandController.h"
+#include "Components/InputComponent.h"
 
 
 // Sets default values
@@ -48,32 +49,47 @@ void AVR_Character::Tick(float DeltaTime)
 // Called to bind functionality to input
 void AVR_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	Super::SetupPlayerInputComponent(InputComponent);
+	Super::SetupPlayerInputComponent(InputComponent);
 
-	PlayerInputComponent->BindAxis(TEXT("Forward"), this, &AVR_Character::MoveForward);
-	PlayerInputComponent->BindAxis(TEXT("Back"), this, &AVR_Character::MoveBackward);
-	PlayerInputComponent->BindAxis(TEXT("Right"), this, &AVR_Character::MoveRight);
-	PlayerInputComponent->BindAxis(TEXT("Left"), this, &AVR_Character::MoveLeft);
+	InputComponent->BindAction("GrabR", IE_Pressed, this, &AVR_Character::ControllerGrabR);
+	InputComponent->BindAction("GrabR", IE_Released, this, &AVR_Character::ControllerReleaseR);
+
+	InputComponent->BindAction("GrabL", IE_Pressed, this, &AVR_Character::ControllerGrabL);
+	InputComponent->BindAction("GrabL", IE_Released, this, &AVR_Character::ControllerReleaseL);
+	 
+	InputComponent->BindAxis("Forward", this, &AVR_Character::MoveForward);
+	InputComponent->BindAxis("Right", this, &AVR_Character::MoveRight);
 
 }
 
 void AVR_Character::MoveForward(float throttle)
 {
-	AddMovementInput(Camera->GetForwardVector() * throttle);
-}
-
-void AVR_Character::MoveBackward(float throttle)
-{
 	AddMovementInput(Camera->GetForwardVector() * -throttle);
 }
+
 
 void AVR_Character::MoveRight(float throttle)
 {
 	AddMovementInput(Camera->GetRightVector() * throttle);
 }
 
-void AVR_Character::MoveLeft(float throttle)
+void AVR_Character::ControllerGrabR()
 {
-	AddMovementInput(Camera->GetRightVector() * -throttle);
+	RightController->Grab();
+}
+
+void AVR_Character::ControllerReleaseR()
+{
+	RightController->Release();
+}
+
+void AVR_Character::ControllerGrabL()
+{
+	LeftController->Grab();
+}
+
+void AVR_Character::ControllerReleaseL()
+{
+	LeftController->Release();
 }
