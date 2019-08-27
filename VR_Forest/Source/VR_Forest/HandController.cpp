@@ -48,25 +48,6 @@ void AHandController::Tick(float DeltaTime)
 
 }
 
-bool AHandController::GetFirstObjectInReach()
-{
-	/*FVector Start = Controller->GetComponentLocation();
-	FVector End = ((Controller->GetComponentRotation().Vector() * 200.f) + Start);
-
-	FHitResult OutHit;
-
-	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
-
-	if (GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, TraceParameters))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Object in reach: %s"), *OutHit.GetActor()->GetName())
-		DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 1);
-	}
-
-	return OutHit;*/
-	return true;
-}
-
 void AHandController::SetHand(EControllerHand hand)
 {
 	Controller->Hand = hand;
@@ -84,7 +65,7 @@ void AHandController::Grab()
 	if (GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, TraceParameters))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Object in reach: %s"), *OutHit.GetActor()->GetName())
-		DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 1);
+		//DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 1);
 
 		UPrimitiveComponent* ComponentToGrab = OutHit.GetComponent();
 		AActor* ActorHit = OutHit.GetActor();

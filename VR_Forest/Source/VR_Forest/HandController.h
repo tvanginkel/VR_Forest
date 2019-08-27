@@ -44,7 +44,4 @@ private:
 	UInputComponent* InputComponent = nullptr;
 
 	float Reach = 110.0f;
-
-	bool GetFirstObjectInReach();
-	
 };
