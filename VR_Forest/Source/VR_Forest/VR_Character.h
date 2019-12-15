@@ -1,7 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
+//Aquí es donde se incluyen las librerias. Una libreria es un conjunto de codigo que otra gente ha hecho y que tu puedes usar. Esto facilita mucho la programación porque no hay que hacer el trabajo que otra gente ya a hecho 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "VR_Character.generated.h"

@@ -43,5 +43,5 @@ private:
 
 	UInputComponent* InputComponent = nullptr;
 
-	float Reach = 110.0f;
+	float Reach = 150.0f;
 };

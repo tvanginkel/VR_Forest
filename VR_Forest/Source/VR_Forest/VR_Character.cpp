@@ -42,7 +42,7 @@ void AVR_Character::BeginPlay()
 // Called every frame
 void AVR_Character::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(DeltaTime); 
 
 }
 

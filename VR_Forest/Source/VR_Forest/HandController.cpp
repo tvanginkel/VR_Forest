@@ -15,7 +15,7 @@ AHandController::AHandController()
 	Controller = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("MotionController"));
 	SetRootComponent(Controller);
 
-}
+}		
 
 // Called when the game starts or when spawned
 void AHandController::BeginPlay()
@@ -27,10 +27,6 @@ void AHandController::BeginPlay()
 	if (PhysicsHandle == nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Physics Handle missing"))
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Physics Handle found"))
 	}
 }
 
