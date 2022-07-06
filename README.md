@@ -1,6 +1,6 @@
 # VR_Forest
-A School Project for my final year of 'Batchillerato'.
-For anyone wondering I got a 10/10. Not bad considering one guy made a tutorial about how to peel a potato and got a 9/10.
+My final year project for 'Batchillerato'.
+For anyone wondering I got a 100%. 
 
 <b>Tecnhologies used:</b><br/>
 -Unreal Engine 4<br/>
